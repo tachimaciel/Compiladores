@@ -28,6 +28,7 @@ void initTabla()
 	for(i=0;i<tamTabla;i++)
 	{
 		tabla[i].compLex=-1;
+		//strcpy(tabla[i].compLex,"EOF");
 	}
 }
 
@@ -60,7 +61,8 @@ void rehash()
 	for (i=0;i<tamTabla/2;i++)
 	{
 		if(vieja[i].compLex!=-1)
-			insertar(vieja[i]);
+			insertar(vieja[i]);    
+		//if(strcmp(vieja[i].compLex,"EOF")!=0)
 	}		
 	free(vieja);
 }
@@ -73,6 +75,7 @@ void insertar(entrada e)
 		rehash();
 	pos=h(e.lexema,tamTabla);
 	while (tabla[pos].compLex!=-1)
+	//while (strcmp(tabla[pos].compLex,"EOF")!=0)
 	{
 		pos++;
 		if (pos==tamTabla)
@@ -81,12 +84,14 @@ void insertar(entrada e)
 	tabla[pos]=e;
 
 }
+
 //busca una clave en la tabla, si no existe devuelve NULL, posicion en caso contrario
 entrada* buscar(const char *clave)
 {
 	int pos;
 	pos=h(clave,tamTabla);
 	while(tabla[pos].compLex!=-1 && strcmp(tabla[pos].lexema,clave)!=0 )
+	//while(strcmp(tabla[pos].compLex,"EOF")!=0 && strcmp(tabla[pos].lexema,clave)!=0 )
 	{
 		pos++;
 		if (pos==tamTabla)
@@ -100,70 +105,27 @@ void insertTablaSimbolos(const char *s, int n)
 	entrada e;
 	strcpy(e.lexema,s);
 	// sprintf(e.lexema,s);
+	//strcpy(e.compLex,n);
 	e.compLex=n;
 	insertar(e);
 }
 
 void initTablaSimbolos()
 {
-	int i;
-	const char *vector[]={
-		"program",
-		"type",
-		"var",
-		"array",
-		"begin",
-		"end",
-		"do",
-		"to",
-		"downto",
-		"then",
-		"of",
-		"function",
-		"procedure", 
-		"integer", 
-		"real", 
-		"boolean", 
-		"char", 
-		"for", 
-		"if", 
-		"else", 
-		"while", 
-		"repeat", 
-		"until", 
-		"case", 
-		"record", 
-		"writeln",
-		"write",
-		"const"
-	};
- 	for (i=0;i<28;i++)
-	{
-		insertTablaSimbolos(vector[i],i+256);
-	}
-	insertTablaSimbolos(",",',');
-	insertTablaSimbolos(".",'.');
-	insertTablaSimbolos(":",':');
-	insertTablaSimbolos(";",';');
-	insertTablaSimbolos("(",'(');
-	insertTablaSimbolos(")",')');
-	insertTablaSimbolos("[",'[');
-	insertTablaSimbolos("]",']');
-	insertTablaSimbolos("true",BOOL);
-	insertTablaSimbolos("false",BOOL);
-	insertTablaSimbolos("not",NOT);
-	insertTablaSimbolos("<",OPREL);
-	insertTablaSimbolos("<=",OPREL);
-	insertTablaSimbolos("<>",OPREL);
-	insertTablaSimbolos(">",OPREL);
-	insertTablaSimbolos(">=",OPREL);
-	insertTablaSimbolos("=",OPREL);
-	insertTablaSimbolos("+",OPSUMA);
-	insertTablaSimbolos("-",OPSUMA);
-	insertTablaSimbolos("or",OPSUMA);
-	insertTablaSimbolos("*",OPMULT);
-	insertTablaSimbolos("/",OPMULT);
-	insertTablaSimbolos("div",OPMULT);
-	insertTablaSimbolos("mod",OPMULT);
-	insertTablaSimbolos(":=",OPASIGNA);
+	insertTablaSimbolos(",",COMA);
+	insertTablaSimbolos(":",DOS_PUNTOS);
+	insertTablaSimbolos("{",L_LLAVE);
+	insertTablaSimbolos("}",R_LLAVE);
+	insertTablaSimbolos("[",L_CORCHETE);
+	insertTablaSimbolos("]",R_CORCHETE);
+	insertTablaSimbolos("true",PR_TRUE);
+	insertTablaSimbolos("TRUE",PR_TRUE);
+	insertTablaSimbolos("false",PR_FALSE);
+	insertTablaSimbolos("FALSE",PR_FALSE);
+	insertTablaSimbolos("null",PR_NULL);
+	insertTablaSimbolos("NULL",PR_NULL);
 }
+
+
+
+

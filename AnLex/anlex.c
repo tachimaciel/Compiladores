@@ -9,7 +9,7 @@
  * 
  *	AUTORES
  *	- EDUARDO MACIEL
- *  - JUAN PABLO MARTINEZ
+ *  	- JUAN PABLO MARTINEZ
  */
 
 /*********** Inclusión de cabecera **************/
