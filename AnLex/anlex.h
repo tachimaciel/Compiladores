@@ -22,13 +22,12 @@
 #define TAMBUFF 	5
 #define TAMLEX 		50
 #define TAMHASH 	101
-#define ARCHIVO     "prueba2.txt"
+#define ARCHIVO     "output.txt"
 
 /************* Estructuras ********************/
 
 typedef struct entrada{
 	//definir los campos de 1 entrada de la tabla de simbolos
-	//char compLex[20];
 	int compLex;
 	char lexema[TAMLEX];	
 	struct entrada *tipoDato; // null puede representar variable no declarada	
