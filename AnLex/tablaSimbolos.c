@@ -28,7 +28,6 @@ void initTabla()
 	for(i=0;i<tamTabla;i++)
 	{
 		tabla[i].compLex=-1;
-		//strcpy(tabla[i].compLex,"EOF");
 	}
 }
 
@@ -61,8 +60,7 @@ void rehash()
 	for (i=0;i<tamTabla/2;i++)
 	{
 		if(vieja[i].compLex!=-1)
-			insertar(vieja[i]);    
-		//if(strcmp(vieja[i].compLex,"EOF")!=0)
+			insertar(vieja[i]);
 	}		
 	free(vieja);
 }
@@ -75,7 +73,6 @@ void insertar(entrada e)
 		rehash();
 	pos=h(e.lexema,tamTabla);
 	while (tabla[pos].compLex!=-1)
-	//while (strcmp(tabla[pos].compLex,"EOF")!=0)
 	{
 		pos++;
 		if (pos==tamTabla)
@@ -91,7 +88,6 @@ entrada* buscar(const char *clave)
 	int pos;
 	pos=h(clave,tamTabla);
 	while(tabla[pos].compLex!=-1 && strcmp(tabla[pos].lexema,clave)!=0 )
-	//while(strcmp(tabla[pos].compLex,"EOF")!=0 && strcmp(tabla[pos].lexema,clave)!=0 )
 	{
 		pos++;
 		if (pos==tamTabla)
@@ -104,8 +100,6 @@ void insertTablaSimbolos(const char *s, int n)
 {
 	entrada e;
 	strcpy(e.lexema,s);
-	// sprintf(e.lexema,s);
-	//strcpy(e.compLex,n);
 	e.compLex=n;
 	insertar(e);
 }
@@ -125,7 +119,4 @@ void initTablaSimbolos()
 	insertTablaSimbolos("null",PR_NULL);
 	insertTablaSimbolos("NULL",PR_NULL);
 }
-
-
-
 
