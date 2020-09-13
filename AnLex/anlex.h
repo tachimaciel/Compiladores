@@ -7,12 +7,12 @@
 /************* Definiciones ********************/
 
 //Codigos
-#define L_CORCHETE 	      256
-#define R_CORCHETE	      257
-#define L_LLAVE 	      258
-#define R_LLAVE 	      259
-#define COMA		      260
-#define DOS_PUNTOS	      261
+#define L_CORCHETE 	      91
+#define R_CORCHETE	      93
+#define L_LLAVE 	      123
+#define R_LLAVE 	      125
+#define COMA		      44
+#define DOS_PUNTOS	      58
 #define STRING            262
 #define NUMBER  	      263
 #define PR_TRUE		      264
