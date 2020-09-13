@@ -14,4 +14,4 @@ Compilación y Ejecución:
 # Linux
 Compilación y Ejecución:
   * gcc anlex.c tablaSimbolos.c -o salida
-  * ./anlex feunte.txt
+  * ./anlex fuente.txt
