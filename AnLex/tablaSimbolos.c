@@ -120,3 +120,4 @@ void initTablaSimbolos()
 	insertTablaSimbolos("NULL",PR_NULL);
 }
 
+
