@@ -9,7 +9,7 @@
  * 
  *	AUTORES
  *	- EDUARDO MACIEL
- *  	- JUAN PABLO MARTINEZ
+ *  - JUAN PABLO MARTINEZ
  */
 
 /*********** Inclusión de cabecera **************/
@@ -34,7 +34,7 @@ int contador=-1;         // Cantidad de espacios a cargar
 // Rutinas del analizador lexico
 void error(const char* mensaje)
 {
-	fprintf(fd, "\nLin %d: Error Lexico. %s\n",numLinea,mensaje);	
+	printf("Lin %d: Error Lexico. %s.\n",numLinea,mensaje);
 }
 
 void sigLex()
@@ -80,12 +80,13 @@ void sigLex()
 			continue;
 		}
 		//  CADENAS ENTRE COMILLAS
-		else if (c=='"')
+		else if (c=='\"')
 		{
 			//es un string
 		    i=0;
 			id[i]=c;
 			i++;
+			int bandError = 0;
 			do
 			{
 				c=fgetc(archivo);
@@ -98,14 +99,12 @@ void sigLex()
 				}
                 else if(c==EOF || c==',' || c=='\n' || c==':')
 				{
-				    sprintf(msg,"No se esperaba '%c'",c);
-                    fprintf(fd," %s","Se esperaba que finalize el literal");
+				    sprintf(msg,"No se esperaba '%c', Se esperaba que finalize el literal",c);
 					error(msg);
                     while(c!='\n')
                         c=fgetc(archivo);
-
+                    bandError = 1;
                     ungetc(c,archivo);
-                    contador=-1;
                     break;
 				}
 				else
@@ -114,7 +113,11 @@ void sigLex()
 					i++;
 				}
 			}while(isascii(c) || bandera==0);
-			    id[i]='\0';
+			if (bandError == 1){
+			    contador=-1;
+			    continue;
+			}
+			id[i]='\0';
 			t.pe=buscar(id);
 			t.compLex=t.pe->compLex;
 	        if (t.pe->compLex==-1)
@@ -225,9 +228,19 @@ void sigLex()
 							estado=6;
 						}break;
 					case 6://estado de aceptacion, devolver el caracter correspondiente a otro componente lexico
-						if (c!=EOF)
+						if (c!=EOF){
+						    if(isalpha(c)){    // Si viene una letra (distinta de "e", ya que tiene su propio caso), es error
+						        sprintf(msg,"No se esperaba '%c'",c); 
+						        error(msg);
+                                acepto=1;
+                                t.compLex=1;
+                                while(c!='\n')
+                                    c=fgetc(archivo);
+                                ungetc(c,archivo);
+					            break;
+						    }
 							ungetc(c,archivo);
-						else
+						}else
 							c=0;
 						id[++i]='\0';
 						acepto=1;
@@ -302,7 +315,9 @@ void sigLex()
 			    while(c!='\n'){
 			        c=fgetc(archivo);
 		        }
+		        contador=-1;
 			    error(aux);
+			    ungetc(c,archivo);
 			    continue;
 			}
 			if (c!=EOF)
@@ -352,7 +367,7 @@ int main(int argc,char* args[])
 	initTabla();
 	initTablaSimbolos();
 	
-	// Apertura de un archivo prueba.txt donde se escribiran los resultados
+	// Se crea un archivo output.txt donde se escribiran los resultados
 	fd = fopen(ARCHIVO , "w");
 	
 	if(argc > 1)
@@ -365,50 +380,49 @@ int main(int argc,char* args[])
 		
         // Escribir los componentes lexicos en el archivo de salida hasta que se llegue a EOF
 	    while(t.compLex!=EOF){
-		sigLex();
+		    sigLex();
 			
-	    // Escribir los espacios del archivo fuente al archivo de salida
-	    if(contador > -1)
-            {
+	        // Escribir los espacios en blanco del archivo fuente al archivo de salida
+	        if(contador > -1){
                 int i = 0;
                 for(i=0; i<=contador;i++)
                     fprintf(fd, "%c" , espacios[i]);
             }
 
-			switch(t.compLex)
-			{
+			switch(t.compLex){
+			
                 case L_CORCHETE:
-                    fprintf(fd,"%s"," L_CORCHETE");
+                    fprintf(fd,"%s","L_CORCHETE ");
                     break;
                 case R_CORCHETE:
-                    fprintf(fd,"%s"," R_CORCHETE");
+                    fprintf(fd,"%s","R_CORCHETE ");
                     break;
                 case L_LLAVE:
-                    fprintf(fd,"%s"," L_LLAVE");
+                    fprintf(fd,"%s","L_LLAVE ");
                     break;
                 case R_LLAVE:
-                    fprintf(fd,"%s"," R_LLAVE");
+                    fprintf(fd,"%s","R_LLAVE ");
                     break;
                 case COMA:
-                    fprintf(fd,"%s"," COMA");
+                    fprintf(fd,"%s","COMA ");
                     break;
                 case DOS_PUNTOS:
-                    fprintf(fd,"%s"," DOS_PUNTOS");
+                    fprintf(fd,"%s","DOS_PUNTOS ");
                     break;
                 case STRING:
-                    fprintf(fd,"%s"," STRING");
+                    fprintf(fd,"%s","STRING ");
                     break;
                 case NUMBER:
-                    fprintf(fd,"%s"," NUMBER");
+                    fprintf(fd,"%s","NUMBER ");
                     break;
                 case PR_TRUE:
-                    fprintf(fd,"%s"," PR_TRUE");
+                    fprintf(fd,"%s","PR_TRUE ");
                     break;
                 case PR_FALSE:
-                    fprintf(fd,"%s"," PR_FALSE");
+                    fprintf(fd,"%s","PR_FALSE ");
                     break;
                 case PR_NULL:
-                    fprintf(fd,"%s"," PR_NULL");
+                    fprintf(fd,"%s","PR_NULL ");
                     break;
                 case EOF:
                     break;
