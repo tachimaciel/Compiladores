@@ -7,5 +7,5 @@ Autores:
 Analizador Léxico para archivos JSON hecho en el lenguaje C
 
 Windows
- Compilación: #gcc anlex.c tablaSimbolos.c -o salida
- Ejecución: #salida.exe fuente.txt
+ *Compilación: #gcc anlex.c tablaSimbolos.c -o salida
+ *Ejecución: #salida.exe fuente.txt
