@@ -4,7 +4,7 @@ Autores:
   * Eduardo Maciel
   * Juan Pablo Martinez
   
-Analizador Léxico y Sintáctico para archivos JSON hecho en el lenguaje C
+Analizador Léxico, Sintáctico y traducción al XML para archivos JSON hecho en el lenguaje C
 
 # Windows
 Compilación y Ejecución AnLex:
