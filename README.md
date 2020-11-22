@@ -14,6 +14,10 @@ Compilación y Ejecución AnLex:
 Compilación y Ejecución AnSin:
   * gcc ansin.c -o salida
   * salida.exe fuente.txt
+
+Compilación y Ejecución Traductor:
+  * gcc trad.c -o salida
+  * salida.exe fuente.txt
   
 # Linux
 Compilación y Ejecución AnLex:
@@ -22,4 +26,8 @@ Compilación y Ejecución AnLex:
 
 Compilación y Ejecución AnSin:
   * gcc ansin.c -o salida
+  * ./salida fuente.txt
+  
+Compilación y Ejecución Traductor:
+  * gcc trad.c -o salida
   * ./salida fuente.txt
